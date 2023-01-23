@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Services;
 
 use App\Http\Requests\StoreEventRequest;
 use App\Http\Requests\UpdateEventRequest;
