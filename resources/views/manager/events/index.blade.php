@@ -10,7 +10,6 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <section class="text-gray-600 body-font">
                     <div class="container px-5 py-4 mx-auto">
-
                         @if (session('status'))
                             <div class="mb-4 font-medium text-sm text-green-600">
                                 {{ session('status') }}
@@ -55,7 +54,14 @@
 
                                             <td class="px-4 py-3">{{ $event->start_date }}</td>
                                             <td class="px-4 py-3">{{ $event->end_date }}</td>
-                                            <td class="px-4 py-3">後ほど</td>
+                                            <td class="px-4 py-3">
+                                                @if (is_null($event->number_of_people))
+                                                    0
+                                                @else
+                                                    {{ $event->number_of_people }}
+                                                @endif
+
+                                            </td>
                                             <td class="px-4 py-3">{{ $event->max_people }}</td>
                                             <td class="px-4 py-3">{{ $event->is_visible }}</td>
                                         </tr>
