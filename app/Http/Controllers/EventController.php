@@ -22,11 +22,7 @@ class EventController extends Controller
             ->select('event_id', DB::raw('sum(number_of_people) as number_of_people'))
             ->whereNull('canceled_date')
             ->groupBy('event_id');
-
-
-
-        // dd($reservedPeople);
-
+            
         $events = DB::table('events')
             ->leftJoinSub(
                 $reservedPeople,
