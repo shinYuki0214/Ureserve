@@ -15,8 +15,8 @@
                         </div>
                     @endif
 
-                    <form method="get" action="{{ route('events.edit', ['event' => $event->id]) }}">
-
+                    <form method="POST" action="{{ route('events.reserve', ['id' => $event->id]) }}">
+                        @csrf
                         <div>
                             <x-jet-label for="event_name" value="イベント名" />
                             {{ $event->name }}
@@ -47,17 +47,29 @@
                                 <x-jet-label for="max_people" value="定員数" />
                                 {{ $event->max_people }}
                             </div>
+
                             <div class="mt-4">
-                                @if ($event->is_visible)
-                                    表示中
+                                @if ($reservablePeople <= 0)
+                                    <span class="text-red-500 text-xs">このイベントは満員です。</span>
                                 @else
-                                    非表示
+                                    <x-jet-label for="reserved_people" value="予約人数" />
+                                    <select name="reserved_people" id="reserved_people">
+                                        @for ($i = 1; $i <= $reservablePeople; $i++)
+                                            <option value="{{ $i }}">{{ $i }}</option>
+                                        @endfor
+                                    </select>
                                 @endif
+
                             </div>
-                            @if ($event->eventDate >= \Carbon\Carbon::today()->format('Y年m月d日'))
-                                <x-jet-button class="ml-4">
-                                    編集する
-                                </x-jet-button>
+                            @if ($isReserved === null)
+                                <input type="hidden" name="id" value="{{ $event->id }}">
+                                @if ($reservablePeople > 0)
+                                    <x-jet-button class="ml-4">
+                                        予約する
+                                    </x-jet-button>
+                                @endif
+                            @else
+                                <span class="text-xs">このイベントは既に予約済みです。</span>
                             @endif
                         </div>
                     </form>
@@ -66,7 +78,7 @@
         </div>
     </div>
 
-    <div class="py-12">
+    {{-- <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="py-4 max-w-2xl mx-auto">
@@ -87,7 +99,7 @@
                                 <div class="text-center py-4">予約状況</div>
                                 @foreach ($reservations as $reservation)
                                     @if (is_null($reservation['canceled_date']))
-                                  a      <tr>
+                                        <tr>
 
                                             <td class="px-4 py-3">{{ $reservation['name'] }}</td>
                                             <td class="px-4 py-3">{{ $reservation['number_of_people'] }}</td>
@@ -101,5 +113,5 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 </x-app-layout>
