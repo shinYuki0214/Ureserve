@@ -22,7 +22,7 @@ class EventFactory extends Factory
         $minutes = [0, 30]; //00分か30分か
         $mKey = array_rand($minutes);//ランダムにキーを取得
         $addHour = $this->faker->numberBetween(1, 3);//イベント時間 1時間〜3時間
-        $dummyDate = $this->faker->dateTimeThisMonth;
+        $dummyDate = $this->faker->dateTimeBetween('1day', '1year');
         $startDate = $dummyDate->setTime($availableHour,$minutes[$mKey]);
         $clone = clone $startDate;
         $endDate = $clone->modify('+'. $addHour . 'hour');

@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
 
 
 
-        Event::factory(100)->create();
+        Event::factory(360)->create();
 
         $this->call([
             UserSeeder::class,

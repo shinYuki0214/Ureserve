@@ -38,7 +38,7 @@ Route::prefix('manager')
         Route::get('events/past', [EventController::class, 'past'])->name('events.past');
         Route::resource('events', EventController::class);
     });
-Route::middleware('can:user-higher')
+Route::middleware(['auth'])
     ->group(function () {
         Route::get('dashboard',[ReservationController::class,'dashboard'])->name('dashboard');
         Route::get('mypage',[MyPageController::class,'index'])->name('mypage.index');
